@@ -11,7 +11,7 @@ curl $JENKINS_API
 set -e
 GITLAB_URL="http://192.168.0.154/labtest/commit/%H"
 REV=`git log --pretty=format:"%h" -1`
-TOKEN="2fb804f0e68c6c13dc1a1e0dd804144d"
+TOKEN="" # API Token created at Pivotal
 AUTHOR=`git log --pretty=format:"%an" -1`
 MESSAGE=`git log --pretty=format:"%s $GITLAB_URL" -1`
 MESSAGE=${MESSAGE//&/&amp;}
