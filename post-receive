@@ -4,17 +4,19 @@
 # will be processed properly.
 
 #Jenkins hook
-curl http://vm-ubuntu2:8080/git/notifyCommit?url=git@vm-ubuntu2:labtest.git
+JENKINS_API="http://vm-ubuntu2:8080/git/notifyCommit?url=git@vm-ubuntu2:labtest.git"
+curl $JENKINS_API
 
 #Pivotal Tracker hook
 set -e
+GITLAB_URL="http://192.168.0.154/labtest/commit/%H"
 REV=`git log --pretty=format:"%h" -1`
+TOKEN="2fb804f0e68c6c13dc1a1e0dd804144d"
 AUTHOR=`git log --pretty=format:"%an" -1`
-MESSAGE=`git log --pretty=format:"%s http://192.168.0.154/labtest/commit/%H" -1`
+MESSAGE=`git log --pretty=format:"%s $GITLAB_URL" -1`
 MESSAGE=${MESSAGE//&/&amp;}
 MESSAGE=${MESSAGE//</&lt;}
 MESSAGE=${MESSAGE//>/&gt;}
-TOKEN="2fb804f0e68c6c13dc1a1e0dd804144d"
 
 RESPONSE=`curl -H "X-TrackerToken: $TOKEN" -X POST -H "Content-type: application/xml" -d "<source_commit><message>$MESSAGE</message><author>$AUTHOR</author><commit_id>$REV</commit_id></source_commit>" http://www.pivotaltracker.com/services/v3/source_commits`
 

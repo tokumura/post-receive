@@ -1,0 +1,6 @@
+== post-receive
+
+This is the shell of gitlab for hooking Jenkins and PivotalTracker.
+Put this on '/home/git/repositories/{your_project}/hook/'.
+Rename url to your enviroments.
+Have a good CI.
